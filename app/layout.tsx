@@ -5,6 +5,7 @@ import { NextFont } from 'next/dist/compiled/@next/font';
 import Navbar from './components/navbar/Navbar';
 import ClientOnly from './components/ClientOnly';
 import RegisterModal from './hooks/RegisterModal';
+import ToasterProvider from './providers/ToasterProvider';
 
 export const metadata = {
   title: 'Airbnb',
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en"> 
       <body className={font.className}>
         <ClientOnly>
+          <ToasterProvider />
           <RegisterModal/>
           <Navbar />
         </ClientOnly>
