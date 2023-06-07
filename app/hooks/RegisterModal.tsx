@@ -9,6 +9,8 @@ import useRegisterModal from "./useRegisterModal"
 import Modal from "../components/modals/Modal"
 import Heading from "../components/Heading"
 import Input from "../components/inputs/Input"
+import toast from "react-hot-toast"
+import Button from "../components/Button"
 
 const RegisterModal = () => {
   const { onOpen, onClose, isOpen } = useRegisterModal()
@@ -30,7 +32,8 @@ const RegisterModal = () => {
         onClose()
       })
        .catch((error) => {
-          console.log(error)
+          const { message } = error
+          toast.error(message)
        })
        .finally(() => {
         setIsLoading(false)
@@ -45,12 +48,52 @@ const RegisterModal = () => {
       />
       <Input 
         id="email"
-        label="label"
+        label="Email"
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input 
+        id="name"
+        label="Name"
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input 
+        id="password"
+        label="Password"
         register={register}
         errors={errors}
         required
       />
     </div>
+  )
+
+  const footerContent = (
+     <div className="flex flex-col gap-4 mt-3">
+      <hr />
+      <Button
+        outline
+        label="Continue with Google"
+        icon={FcGoogle}
+        onClick={() => {}}
+      />
+      <Button
+        outline
+        label="Continue with Github"
+        icon={AiFillGithub}
+        onClick={() => {}}
+      />
+      <div className="flex flex-row items-center justify-center gap-2">
+        <div>
+          Already have an account?
+        </div>
+        <div onClick={onClose} className="cursor-pointer text-neutral-800 hover:underline">
+          Log in
+        </div>
+      </div>
+     </div>
   )
 
   return (
@@ -61,6 +104,7 @@ const RegisterModal = () => {
        actionLabel="Continue"
        onSubmit={handleSubmit(onSubmit)}
        body={bodyContent}
+       footer={footerContent}
     />
   )
 }
